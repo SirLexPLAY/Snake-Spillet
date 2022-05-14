@@ -42,6 +42,11 @@ public class Modell {
 
         if (!forlenge) {slange.remove(0);}
         slange.add(nyHode);
+
+        if (sjekkSlangeKollisjon()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -55,12 +60,13 @@ public class Modell {
 
         if (epler[hodeRad][hodeKolonne] == true) {            
             boolean trukketUt = false;
+            epler[hodeRad][hodeKolonne] = false;
             score++;
 
             // trekker et nytt eple
             while (!trukketUt) {
-                int nyEpleRad = trekk(0, baneHooyde);
-                int nyEpleKolonne = trekk(0, baneBredde);
+                int nyEpleRad = trekk( 0, baneHooyde-1);
+                int nyEpleKolonne = trekk(0, baneBredde-1);
                 if (epler[nyEpleRad][nyEpleKolonne] == false) {
                     epler[nyEpleRad][nyEpleKolonne] = true;
                     trukketUt = true;
@@ -101,5 +107,23 @@ public class Modell {
                 klar = true;
             }
         }
+    }
+
+    // Sjekker kolisjon mellom hodet og en av kroppsdelene til slangen
+    // Kollisjon: true, ikke kolisjon: false
+    public boolean sjekkSlangeKollisjon() {
+        int slangeLengde = slange.size();
+        Integer[] slangeHode = slange.get(slangeLengde-1);
+
+        for (Integer[] slangeDel : slange) {
+            if (slangeDel == slangeHode) {
+                continue;
+            }
+            if (slangeHode[0] == slangeDel[0] && slangeHode[1] == slangeDel[1]) {
+                spillStatus = false;
+                return true;
+            }
+        }
+        return false;
     }
 }

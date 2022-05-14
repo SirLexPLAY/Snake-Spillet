@@ -7,8 +7,9 @@ import javax.swing.*;
 
 public class GUI {
     Kontroll kontroll;
-    JFrame vindu;
-    JPanel panel, konsoll, rutenett;
+    Vindu vindu;
+    JPanel panel, konsoll, rutenett, styreKnapper;
+    JButton[] knapper; // 0 - nord; 1 - øst, 2 - sør, 3 - vest
     JLabel[][] ruter;
     JButton startKnapp = new JButton("START");
     int baneHooyde;
@@ -58,7 +59,7 @@ public class GUI {
         } catch (Exception e) {System.exit(0);}
 
         // Oppretter et nytt vindu
-        vindu = new JFrame("Slangespillet");
+        vindu = new Vindu("Slangespillet", kontroll);
         vindu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vindu.setSize(new Dimension(500, 500));
 
@@ -67,12 +68,60 @@ public class GUI {
         panel.setLayout(new BorderLayout());
         vindu.add(panel);
 
-        // Oppretter et JPanel for konsoll (Poengsum, START knapp)
+        // Oppretter et JPanel for konsoll (Poengsum, START knapp, styreknapper)
         konsoll = new JPanel();
         konsoll.setLayout(new BorderLayout());
         panel.add(konsoll, BorderLayout.NORTH);
         konsoll.add(startKnapp, BorderLayout.EAST);
-        konsoll.add(new JLabel("Poengsum: 0"));
+        konsoll.add(new JLabel("Poengsum: 0"), BorderLayout.WEST);
+
+        //
+        class styreKnapp implements ActionListener {
+            int retning;
+
+            styreKnapp(int retning) {
+                this.retning = retning;
+            }
+
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                if (retning == 0) {
+                    kontroll.skifRetning(kontroll.NORD);
+                } else if (retning == 1) {
+                    kontroll.skifRetning(kontroll.OOST);
+                } else if (retning == 2) {
+                    kontroll.skifRetning(kontroll.SOOR);
+                } else if (retning == 3) {
+                    kontroll.skifRetning(kontroll.VEST);
+                }
+            }
+        }
+
+        // Oppretter styreKnapper
+        knapper = new JButton[4];
+        knapper[0] = new JButton(); // nord
+        knapper[1] = new JButton(); // øst
+        knapper[2] = new JButton(); // sør
+        knapper[3] = new JButton(); // vest
+
+        knapper[0].addActionListener(new styreKnapp(0));
+        knapper[1].addActionListener(new styreKnapp(1));
+        knapper[2].addActionListener(new styreKnapp(2));
+        knapper[3].addActionListener(new styreKnapp(3));
+
+        knapper[0].setText("Opp");
+        knapper[1].setText("Høyre");
+        knapper[2].setText("Ned");
+        knapper[3].setText("Venstre");
+
+        styreKnapper = new JPanel();
+        styreKnapper.setLayout(new BorderLayout());
+        styreKnapper.add(knapper[0], BorderLayout.NORTH);
+        styreKnapper.add(knapper[1], BorderLayout.EAST);
+        styreKnapper.add(knapper[2], BorderLayout.SOUTH);
+        styreKnapper.add(knapper[3], BorderLayout.WEST);
+
+        konsoll.add(styreKnapper, BorderLayout.CENTER);
 
         // Definerer oppførselen til startknappen
         class Startbehandler implements ActionListener {
@@ -83,7 +132,6 @@ public class GUI {
                     kontroll.spillTraad.start();
                     startKnapp.setText("STOPP");
                 } else {
-                    System.out.println("Lol");
                 }
             }
         }
@@ -106,7 +154,7 @@ public class GUI {
         }
         panel.add(rutenett, BorderLayout.SOUTH);
         vindu.setFocusable(true);
-        vindu.addKeyListener(new TastBehandler(kontroll));
+        //vindu.addKeyListener(new TastBehandler(kontroll));
 
         // Gjør alt synlig
         vindu.pack();
@@ -138,9 +186,6 @@ public class GUI {
                 ruten.setBackground(Color.GREEN);
             }
         }
-        System.out.println("oppdatert");
-        System.out.println(slange.size());
-        System.out.println("rad: " + slange.get(slange.size()-1)[0] + ", kolonne: " + slange.get(slange.size()-1)[1]);
     }   
 }
 
@@ -156,19 +201,15 @@ class TastBehandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == KeyEvent.VK_UP) {
-            System.out.println("Skiftet nord!");
             kontroll.skifRetning(kontroll.NORD);
         }
         else if (keyCode == KeyEvent.VK_DOWN) {
-            System.out.println("Skiftet sør!");
             kontroll.skifRetning(kontroll.SOOR);
         }
         else if (keyCode == KeyEvent.VK_LEFT) {
-            System.out.println("Skiftet vest!");
             kontroll.skifRetning(kontroll.VEST);
         }
         else if (keyCode == KeyEvent.VK_RIGHT) {
-            System.out.println("Skifter øst!");
             kontroll.skifRetning(kontroll.OOST);
         }
     }
@@ -179,3 +220,5 @@ class TastBehandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {}
 }
+
+// Styreknapper

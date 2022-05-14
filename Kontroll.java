@@ -41,7 +41,8 @@ public class Kontroll {
         modell.baneHooyde = gui.baneHooyde;
         modell.baneBredde = gui.baneBredde;
         modell.epler = new boolean[modell.baneHooyde][modell.baneBredde];
-        int antallEpler = (int) Math.ceil(((float) modell.baneHooyde * (float) modell.baneBredde)/20);
+        //int antallEpler = (int) Math.ceil(((float) modell.baneHooyde * (float) modell.baneBredde)/20);
+        int antallEpler = 10;
         modell.maksAntallEpler = antallEpler;
     }
 
