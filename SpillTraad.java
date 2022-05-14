@@ -1,11 +1,8 @@
 import javax.swing.Timer;
-import java.awt.*;  
-import java.awt.event.*;  
 
-public class SpillTraad implements Runnable, ActionListener {
+public class SpillTraad implements Runnable {
     private Kontroll kontroll;
     private Modell modell;
-    private Timer timer = new Timer(2000, this);
 
     SpillTraad(Kontroll kontroll, Modell modell) {
         this.kontroll = kontroll;
@@ -14,21 +11,15 @@ public class SpillTraad implements Runnable, ActionListener {
 
     @Override
     public void run() {
-        System.out.println("Lets go");
-        timer.start();
+        while (modell.spillStatus) {
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                System.out.println("Noe gikk galt!");
+            }
+            kontroll.flyttSlangen();
+            kontroll.oppdaterRutenett();
+        }
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("Action performed");
-        aaUtfoore();
-    }
-
-    public void aaUtfoore() {
-        System.out.println("Aautføre");
-        kontroll.flyttSlangen();
-        kontroll.oppdaterRutenett();
-    }
-
 }
 
