@@ -177,7 +177,7 @@ public class GUI {
             for (int kx = 0; kx < baneBredde; kx++) {
                 JLabel ruten = ruter[kx][rx];
                 if (epler[kx][rx]) {
-                    ruten.setText("");
+                    ruten.setText("⭑");
                     ruten.setBackground(Color.WHITE);
                     continue;
                 }
