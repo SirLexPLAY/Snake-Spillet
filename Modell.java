@@ -62,6 +62,7 @@ public class Modell {
             boolean trukketUt = false;
             epler[hodeRad][hodeKolonne] = false;
             score++;
+            gui.oppdaterScore();
 
             // trekker et nytt eple
             while (!trukketUt) {

@@ -19,6 +19,7 @@ public class SpillTraad implements Runnable {
             }
             kontroll.flyttSlangen();
             kontroll.oppdaterRutenett();
+            if (kontroll.terminate) {return;}
         }
     }
 }

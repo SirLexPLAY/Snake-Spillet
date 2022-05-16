@@ -6,6 +6,7 @@ public class Kontroll {
     GUI gui;
     Modell modell;
     Thread spillTraad;
+    boolean terminate = false;
 
     // Retninger
     final int NORD = 0;
@@ -61,4 +62,16 @@ public class Kontroll {
         modell.spillStatus = true;
     }
 
+    public void spillStatusAv() {
+        modell.spillStatus = false;
+        terminate = true;
+    }
+
+    public int hentPoengsum() {
+        return modell.score;
+    }
+
+    public boolean hentSpillstatus() {
+        return modell.spillStatus;
+    }
 }

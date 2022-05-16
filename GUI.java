@@ -11,9 +11,11 @@ public class GUI {
     JPanel panel, konsoll, rutenett, styreKnapper;
     JButton[] knapper; // 0 - nord; 1 - øst, 2 - sør, 3 - vest
     JLabel[][] ruter;
+    JLabel poengsum;
     JButton startKnapp = new JButton("START");
     int baneHooyde;
     int baneBredde;
+    boolean gaaUtKnapp = false;
 
     GUI(Kontroll kontroll) {
         this.kontroll = kontroll;
@@ -25,7 +27,7 @@ public class GUI {
         while (!utfylt) {
             userInput = JOptionPane.showInputDialog(
                                     vindu, 
-                                    "Vennligst oppgi parametere for banen din på formen\n <antall rader> <antall kolonner>\n(Sepparert med mellomrom)",
+                                    "Vennligst oppgi parametere for banen din paa formen\n <antall rader> <antall kolonner>\n(Sepparert med mellomrom)",
                                     "Snakespillet - Innstillinger",
                                     JOptionPane.QUESTION_MESSAGE
                                     );
@@ -73,7 +75,8 @@ public class GUI {
         konsoll.setLayout(new BorderLayout());
         panel.add(konsoll, BorderLayout.NORTH);
         konsoll.add(startKnapp, BorderLayout.EAST);
-        konsoll.add(new JLabel("Poengsum: 0"), BorderLayout.WEST);
+        poengsum = new JLabel("Poengsum: 0");
+        konsoll.add(poengsum, BorderLayout.WEST);
 
         //
         class styreKnapp implements ActionListener {
@@ -110,7 +113,7 @@ public class GUI {
         knapper[3].addActionListener(new styreKnapp(3));
 
         knapper[0].setText("Opp");
-        knapper[1].setText("Høyre");
+        knapper[1].setText("Hooyre");
         knapper[2].setText("Ned");
         knapper[3].setText("Venstre");
 
@@ -127,12 +130,17 @@ public class GUI {
         class Startbehandler implements ActionListener {
             @Override
             public void actionPerformed (ActionEvent e) {
-                if (!kontroll.modell.spillStatus) {
+                if (gaaUtKnapp) {System.exit(0);}
+                if (!kontroll.hentSpillstatus()) {
                     kontroll.spillStatusPaa();
                     kontroll.spillTraad.start();
                     startKnapp.setText("STOPP");
                 } else {
+                    kontroll.spillStatusAv();
+                    startKnapp.setText("GAA UT");
+                    gaaUtKnapp = true;
                 }
+                
             }
         }
         startKnapp.addActionListener(new Startbehandler());
@@ -169,7 +177,8 @@ public class GUI {
             for (int kx = 0; kx < baneBredde; kx++) {
                 JLabel ruten = ruter[kx][rx];
                 if (epler[kx][rx]) {
-                    ruter[kx][rx].setText("");
+                    ruten.setText("");
+                    ruten.setBackground(Color.WHITE);
                     continue;
                 }
                 ruten.setText("");
@@ -187,6 +196,10 @@ public class GUI {
             }
         }
     }   
+
+    public void oppdaterScore() {
+        poengsum.setText("Poengsum: " + kontroll.hentPoengsum());
+    }
 }
 
 // Konfigurerer keyListener
@@ -220,5 +233,3 @@ class TastBehandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {}
 }
-
-// Styreknapper

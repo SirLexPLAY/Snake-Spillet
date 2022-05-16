@@ -15,17 +15,14 @@ public class Vindu extends JFrame implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {
+        System.out.println("XD");
         // TODO Auto-generated method stub
         int keyCode = e.getKeyCode();
             if (keyCode == KeyEvent.VK_UP) {
-                System.out.println("TEST");
                 kontroll.skifRetning(kontroll.NORD);
             }
             else if (keyCode == KeyEvent.VK_DOWN) {
@@ -40,9 +37,6 @@ public class Vindu extends JFrame implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
+    public void keyReleased(KeyEvent e) {}
 
 }
