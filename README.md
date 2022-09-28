@@ -1,4 +1,4 @@
-# oblig7_in1010 - Snake Spillet
+# Snake Spillet
 
 ## Hvordan kjøre spillet?
 Veldig enkelt! Fork/last ned filene og lagre i en mappe på maskinen din. Naviger deg frem til mappen i en terminal, og kompiler koden ved bruk av følgende kommando:
@@ -23,6 +23,6 @@ Du vil få opp et hyggeligt vindu, i hvilket du blir bedt om å oppgi dimensjone
 
 **Dato:** Mai 2022
 
-**Type prosjekt:** Obligatorisk innlevering
+**Type prosjekt:** Obligatorisk innlevering 7, IN1010: Objektorientert programmering (UiO)
 
 **Programmeringsspråk:** Java
