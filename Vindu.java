@@ -19,7 +19,6 @@ public class Vindu extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("XD");
         // TODO Auto-generated method stub
         int keyCode = e.getKeyCode();
             if (keyCode == KeyEvent.VK_UP) {
