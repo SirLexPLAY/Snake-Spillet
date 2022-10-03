@@ -8,7 +8,7 @@ import javax.swing.*;
 public class GUI {
     Kontroll kontroll;
     Vindu vindu;
-    JPanel panel, konsoll, rutenett, styreKnapper;
+  	JPanel panel, konsoll, rutenett, styreKnapper;
     JButton[] knapper; // 0 - nord; 1 - øst, 2 - sør, 3 - vest
     JLabel[][] ruter;
     JLabel poengsum;
@@ -140,7 +140,7 @@ public class GUI {
                     startKnapp.setText("GAA UT");
                     gaaUtKnapp = true;
                 }
-                
+                vindu.requestFocusInWindow();
             }
         }
         startKnapp.addActionListener(new Startbehandler());
@@ -162,7 +162,7 @@ public class GUI {
         }
         panel.add(rutenett, BorderLayout.SOUTH);
         vindu.setFocusable(true);
-        //vindu.addKeyListener(new TastBehandler(kontroll));
+        vindu.addKeyListener(new TastBehandler(kontroll));
 
         // Gjør alt synlig
         vindu.pack();
